@@ -2,9 +2,14 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_app/screens/login/cubit/cubit.dart';
 import 'package:shopping_app/screens/login/cubit/states.dart';
+import 'package:shopping_app/screens/home_screen.dart';
 import 'package:shopping_app/screens/register/register_screen.dart';
+import 'package:shopping_app/shared/network/local.dart';
+
+import '../../shared/components/components.dart';
 
 class LoginScreen extends StatelessWidget {
    LoginScreen({Key? key}) : super(key: key);
@@ -18,7 +23,30 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context)  => LoginCubit(),
       child: BlocConsumer<LoginCubit , LoginStates>(
-        listener: (context , state) {},
+        listener: (context , state) {
+          if(state is LoginSuccessState){
+            if(state.loginModel.status){
+             // print(state.loginModel.message);
+              CacheHelper.saveData(key: 'token', value: state.loginModel.data!.token)
+                  .then((value) {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context)=> HomeScreen()),
+                );
+                showToast(
+                    text: state.loginModel.message,
+                    state: ToastState.SUCCESS
+                );
+              });
+            }else{
+              showToast(
+                  text: state.loginModel.message,
+                  state: ToastState.ERROR
+              );
+             // print(state.loginModel.message);
+            }
+          }
+        },
         builder: (context , state) {
 
           var cubit = LoginCubit.get(context);

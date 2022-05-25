@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/screens/login/login_screen.dart';
+import 'package:shopping_app/shared/network/local.dart';
 import 'package:shopping_app/shared/styles/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -30,18 +31,24 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         'assets/images/board_3.png', 'Screen 3 title', 'Screen 3 body'),
   ];
 
+  void skipOnBoarding(){
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if(value == true){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  LoginScreen()),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           TextButton(
-              onPressed: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>  LoginScreen()),
-                );
-              },
+              onPressed: skipOnBoarding,
               child: const Text('SKIP',style: TextStyle(
                 color: primaryColor,
                 fontSize: 18,
@@ -94,9 +101,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   onPressed: () {
 
                     if(isLast){
-                      Navigator.push(context,
-                          MaterialPageRoute(
-                              builder: (context) =>  LoginScreen()));
+                      skipOnBoarding();
                     }else{
                       boardController.nextPage(
                           duration: const Duration(milliseconds: 750),

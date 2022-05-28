@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 
+import '../components/constants.dart';
+
 class DioHelper{
 
   static late Dio dio;
@@ -18,7 +20,7 @@ class DioHelper{
   required String url,
    Map<String , dynamic>? query,
     String lang ='en',
-    String ? token
+     String?  token 
 })async{
 
     dio.options.headers={

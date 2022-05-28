@@ -17,5 +17,5 @@ TextButton SignOut(context) =>
       child: Text('SIGN OUT'),
     );
 
-String token ='';
+ String? token ='';
 

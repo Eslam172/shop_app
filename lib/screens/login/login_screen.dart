@@ -2,7 +2,6 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_app/screens/login/cubit/cubit.dart';
 import 'package:shopping_app/screens/login/cubit/states.dart';
 import 'package:shopping_app/screens/home_screen.dart';
@@ -31,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                   .then((value) {
                 Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context)=> HomeScreen()),
+                    MaterialPageRoute(builder: (context)=> const HomeScreen()),
                 );
                 showToast(
                     text: state.loginModel.message,

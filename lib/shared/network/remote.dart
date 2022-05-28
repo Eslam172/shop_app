@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 
+import '../components/constants.dart';
+
 class DioHelper{
 
   static late Dio dio;
@@ -9,7 +11,8 @@ class DioHelper{
       BaseOptions(
         baseUrl: 'https://student.valuxapps.com/api/',
         receiveDataWhenStatusError: true,
-
+        followRedirects: false,
+        validateStatus: (status) { return status! < 500; }
       ),
     );
   }
@@ -18,7 +21,7 @@ class DioHelper{
   required String url,
    Map<String , dynamic>? query,
     String lang ='en',
-    String ? token
+     String?  token 
 })async{
 
     dio.options.headers={

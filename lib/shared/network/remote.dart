@@ -11,7 +11,8 @@ class DioHelper{
       BaseOptions(
         baseUrl: 'https://student.valuxapps.com/api/',
         receiveDataWhenStatusError: true,
-
+        followRedirects: false,
+        validateStatus: (status) { return status! < 500; }
       ),
     );
   }

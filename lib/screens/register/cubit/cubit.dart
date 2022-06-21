@@ -3,34 +3,40 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/screens/login/cubit/states.dart';
+import 'package:shopping_app/screens/register/cubit/states.dart';
 import 'package:shopping_app/shared/end_points.dart';
 import 'package:shopping_app/shared/network/remote.dart';
 
 import '../../../models/login_model.dart';
 
 
-class LoginCubit extends Cubit<LoginStates> {
-  LoginCubit() : super(LoginInitialState());
+class RegisterCubit extends Cubit<RegisterStates> {
+  RegisterCubit() : super(RegisterInitialState());
 
-  static LoginCubit get(context) => BlocProvider.of(context);
+  static RegisterCubit get(context) => BlocProvider.of(context);
 
-  late LoginModel loginModel;
-  void userLogin({
+   LoginModel? loginModel;
+  void userRegister({
+    required String name,
     required String email,
     required String password,
-  }) {
-    emit(LoginLoadingState());
+    required String phone,
 
-    DioHelper.postData(url: LOGIN, data: {
+  }) {
+    emit(RegisterLoadingState());
+
+    DioHelper.postData(url: REGISTER, data: {
+      'name' : name,
       'email': email,
       'password': password,
+      'phone': phone,
     }).then((value) {
-      print(value.data['message']);
       loginModel = LoginModel.fromJson(value.data);
-      emit(LoginSuccessState(loginModel));
+      print(loginModel!.data!.name);
+      emit(RegisterSuccessState(loginModel!));
     }).catchError((error) {
       print(error.toString());
-      emit(LoginErrorState());
+      emit(RegisterErrorState());
     });
   }
 
@@ -43,6 +49,6 @@ class LoginCubit extends Cubit<LoginStates> {
         ? const Icon(Icons.visibility)
         : const Icon(Icons.visibility_off_outlined);
 
-    emit(LoginChangePasswordVisibilityState());
+    emit(RegisterChangePasswordVisibilityState());
   }
 }

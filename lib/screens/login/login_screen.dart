@@ -6,6 +6,7 @@ import 'package:shopping_app/screens/login/cubit/cubit.dart';
 import 'package:shopping_app/screens/login/cubit/states.dart';
 import 'package:shopping_app/screens/home_screen.dart';
 import 'package:shopping_app/screens/register/register_screen.dart';
+import 'package:shopping_app/shared/components/constants.dart';
 import 'package:shopping_app/shared/network/local.dart';
 
 import '../../shared/components/components.dart';
@@ -24,10 +25,12 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginCubit , LoginStates>(
         listener: (context , state) {
           if(state is LoginSuccessState){
-            if(state.loginModel.status){
+            if(state.loginModel.status == true){
              // print(state.loginModel.message);
               CacheHelper.saveData(key: 'token', value: state.loginModel.data!.token)
                   .then((value) {
+
+                    token = state.loginModel.data!.token;
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context)=> const HomeScreen()),
@@ -137,7 +140,7 @@ class LoginScreen extends StatelessWidget {
                               onPressed: (){
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const RegisterScreen())
+                                    MaterialPageRoute(builder: (context) =>  RegisterScreen())
                                 );
                               },
                               child: const Text('REGISTER',style: TextStyle(

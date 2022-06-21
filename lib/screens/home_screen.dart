@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/screens/login/login_screen.dart';
-import 'package:shopping_app/screens/search_screen.dart';
+import 'package:shopping_app/screens/search/search_screen.dart';
 import 'package:shopping_app/shared/cubit/cubit.dart';
 import 'package:shopping_app/shared/cubit/states.dart';
 import 'package:shopping_app/shared/network/local.dart';

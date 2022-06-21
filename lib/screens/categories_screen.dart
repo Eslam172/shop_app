@@ -1,7 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_app/model/categories_model.dart';
+import 'package:shopping_app/models/categories_model.dart';
 import 'package:shopping_app/shared/cubit/cubit.dart';
 import 'package:shopping_app/shared/cubit/states.dart';
 import 'package:shopping_app/shared/styles/colors.dart';
@@ -17,7 +17,7 @@ class CategoriesScreen extends StatelessWidget {
 
         var cubit = AppCubit.get(context);
         return ConditionalBuilder(
-            condition: true,
+            condition: cubit.categoriesModel!.data != null,
             builder: (context) => ListView.builder(
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) => categoriesItem(cubit.categoriesModel!.data!.data![index]),

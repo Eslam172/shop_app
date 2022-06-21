@@ -21,6 +21,7 @@ void main() async {
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
 
    token = CacheHelper.getData(key: 'token');
+   print(token);
 
   late Widget widget;
 
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit()..getHomeData()..getCategories(),
+      create: (BuildContext context) => AppCubit()..getHomeData()..getCategories()..getFavorites()..getUserModel(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
